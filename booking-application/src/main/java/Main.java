@@ -1,23 +1,31 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    public class Main {
+public class Main {
         public static void main(String[] args) {
-            System.out.println(isOverflowWhenAdd(Integer.MAX_VALUE, 3));
-            System.out.println(isOverflowWhenSub(Integer.MIN_VALUE, -3));
-            System.out.println(isOverflowWhenMul(Integer.MIN_VALUE, 3));
+            int[] arr = {1, 2, 3, 7, 9, 9, 9};
+            System.out.println((sumTR(arr)));
+            System.out.println((lengthTR(arr)));
         }
 
-        public static boolean isOverflowWhenAdd(int x, int y) {
-            boolean result;
-            return result = (x + y) > Integer.MAX_VALUE << 1;
+        private static int lengthTR(int[] xs, int n) {
+            try {
+                if (xs[n] == 0) return n;
+                return lengthTR(xs, n + 1);
+            } catch (IndexOutOfBoundsException e) {
+                return n;
+            }
+        }
+        public static int lengthTR(int[] xs) {
+            return lengthTR(xs, 0);
         }
 
-        public static boolean isOverflowWhenSub(int x, int y) {
-            boolean result;
-            return result = (x - y) > Integer.MIN_VALUE >> 1;
+        private static int sumTR(int[] xs, int n) {
+            if (xs.length == n) return 0;
+            return xs[n] + sumTR(xs, n + 1);
         }
-
-        public static boolean isOverflowWhenMul(int x, int y) {
-            boolean result;
-            return result = (x * y) > Integer.MAX_VALUE << 1;
+        public static int sumTR(int[] xs) {
+            return sumTR(xs, 0);
         }
     }
