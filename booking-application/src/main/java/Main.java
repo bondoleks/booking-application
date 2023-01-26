@@ -1,53 +1,60 @@
 import java.util.Arrays;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(func(2)));
-        System.out.println(toBinary3(3));
+class Main
+{
+    // Шахматная доска `N × N`
+    public static final int N = 5;
+
+
+    public static final int[] row = { 2, 1, -1, -2, -2, -1, 1, 2, 2 };
+    public static final int[] col = { 1, 2, 2, 1, -1, -2, -2, -1, 1 };
+
+    private static boolean isValid(int x, int y)
+    {
+        if (x < 0 || y < 0 || x >= N || y >= N) {
+            return false;
+        }
+
+        return true;
     }
 
-    public static String[] func(int n) {
-        String[] res = new String[n * n];
-        StringBuilder st = new StringBuilder();
-        int ind = 0;
-        String z = "0";
-        String o = "1";
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i % 2 == 0) {
-                    for (int k = 0; k < n - 1; k++) {
-                        st.append(z);
-                    }
-                    if (j % 2 == 0) {
-                        st.append(z);
-                    } else {
-                        st.append(o);
-                    }
-                } else {
-                    for (int k = 0; k < n - 1; k++) {
-                        st.append(o);
-                    }
-                    if (j % 2 == 0) {
-                        st.append(z);
-                    } else {
-                        st.append(o);
-                    }
-                }
-                res[ind] = String.valueOf(st);
-                st.delete(0, n);
-                ind++;
+    private static void print(int[][] visited)
+    {
+        for (var r: visited) {
+            System.out.println(Arrays.toString(r));
+        }
+        System.out.println();
+    }
+
+    public static void knightTour(int[][] visited, int x, int y, int pos)
+    {
+        visited[x][y] = pos;
+
+        if (pos >= N*N)
+        {
+            print(visited);
+            visited[x][y] = 0;
+            return;
+        }
+
+        for (int k = 0; k < 8; k++)
+        {
+            int newX = x + row[k];
+            int newY = y + col[k];
+
+            if (isValid(newX, newY) && visited[newX][newY] == 0) {
+                knightTour(visited, newX, newY, pos + 1);
             }
         }
-        return res;
+
+        visited[x][y] = 0;
     }
 
-    public static String toBinary3(int n) {
-        StringBuilder outcome = new StringBuilder();
-        for (int i = n - 1; i >= 0; i--) { // bit number
-            int bitValue = 1 << i;
-            int bit = n & bitValue;
-            outcome.append(bit > 0 ? "1" : "0");
-        }
-        return outcome.toString();
+    public static void main(String[] args)
+    {
+        int[][] visited = new int[N][N];
+        int pos = 1;
+
+        knightTour(visited, 0, 0, pos);
     }
 }
