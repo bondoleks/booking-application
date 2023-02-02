@@ -222,5 +222,18 @@ public class XLinkedList {
     return findPrev(f, head.next);
   }
 
+  // TODO: homework
+  private Optional<Node> findPrev0(IntPredicate f) {
+    throw new IllegalStateException("to implement");
+  }
+
+//  private void reverse(...,...) {
+//    throw new IllegalStateException("to implement");
+//  }
+
+  public void reverse() {
+    throw new IllegalStateException("to implement");
+  }
+
 
 }
